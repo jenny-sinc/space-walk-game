@@ -30,6 +30,10 @@ moving_down = False
 GRASS = (65,152,10)
 BOUNDARY = (19,109,21)
 
+# define boundaries of game=space
+x_lower, x_upper = 0, SCREEN_WIDTH
+y_lower, y_upper = 0, SCREEN_HEIGHT
+
 def draw_bg():
     screen.fill(GRASS)
     pygame.draw.line(screen, BOUNDARY, (0, 0), (SCREEN_WIDTH, 0), 5)
@@ -50,22 +54,22 @@ class Dog(pygame.sprite.Sprite):
         self.action = 0
         self.update_time = pygame.time.get_ticks()
 
-        #-------------------------------------------------------- IDLE ANIMATION (i=0)
-        temp_list = []
-        for i in range(7):
-            img_folder = f'./img/Idle/{self.character_type}'
-            img = pygame.image.load(f'{img_folder}/{i}.png')
-            img = pygame.transform.scale(img, (int(img.get_width()*scale), int(img.get_height()*scale)))
-            temp_list.append(img)
-        self.animation_list.append(temp_list)
-        #-------------------------------------------------------- WALK ANIMATION (i=1)
-        temp_list = []
-        for i in range(7):
-            img_folder = f'./img/Walk/{self.character_type}'
-            img = pygame.image.load(f'{img_folder}/{i}.png')
-            img = pygame.transform.scale(img, (int(img.get_width()*scale), int(img.get_height()*scale)))
-            temp_list.append(img)
-        self.animation_list.append(temp_list)
+
+        # load all images for characters
+        animation_types = ['Idle', 'Walk']
+        for animation in animation_types:
+            # reset animation types list
+            temp_list = []
+            # counting number of images (frames) for each animation
+            num_frames = len(os.listdir(f'./img/{animation}/{self.character_type}'))
+            # iterate through each frame & appending to temp_list 
+            for i in range(num_frames):
+                img_folder = f'./img/{animation}/{self.character_type}'
+                img = pygame.image.load(f'{img_folder}/{i}.png')
+                img = pygame.transform.scale(img, (int(img.get_width()*scale), int(img.get_height()*scale)))
+                temp_list.append(img)
+            # append temp_list (one complete animation) into overall animation list
+            self.animation_list.append(temp_list)
         
         self.image = self.animation_list[self.action][self.frame_index]
         self.rect = self.image.get_rect()
@@ -93,10 +97,10 @@ class Dog(pygame.sprite.Sprite):
         self.rect.y += dy
 
         # check collision with boundaries of screen
-        if self.rect.top + dy < 0:
-            dy = (0 - self.rect.top)
         if self.rect.bottom + dy > SCREEN_HEIGHT:
-            dy = (SCREEN_HEIGHT - self.rect.bottom)
+            dy = SCREEN_HEIGHT - self.rect.bottom
+            moving_down = False
+
 
 
     def update_animation(self):
