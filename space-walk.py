@@ -8,7 +8,7 @@ pygame.init()
 # info to create the main display
 SCREEN_WIDTH, SCREEN_HEIGHT = 1000, 400
 CAPTION = "Space walk"
-ICON = pygame.image.load("./doug_icon.svg")
+ICON = pygame.image.load("./doug-sprite/doug_0.png")
 FPS = pygame.time.Clock()
 FPS.tick(60)
 
