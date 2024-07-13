@@ -16,11 +16,16 @@ pygame side-scroller about walking my dog Doug
   - **What went poorly:**
     * I accidentally lost the MVP I made when trying to reorganise my folders (luckily only 1 evenings work & I can make it much quicker now) 
 
+# 🌱 MVP 🌱
+* orange block character controlled by the user to dodge other brown block enemies entering from the RHS of screen (travelling left)
+* on contact with an enemy block, game quits
 
-#  📋 In Future:
-❓ TBC
+#  📋 In Future 📋
+* treats to collect
+* other objects to avoid (trees/shrubs etc)
+* health &/ lives
 
-# :book: Resources
+# 📚 Resources 📚
 * http://pygametutorials.wikidot.com/tutorials-basic
 * https://coderslegacy.com/python/python-pygame-tutorial/
 * Coding with Russ YT video https://www.youtube.com/watch?v=DHgj5jhMJKg
