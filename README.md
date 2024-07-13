@@ -1,7 +1,5 @@
-# space-walk-game
+# 🐕 space-walk-game 🐕
 pygame side-scroller about walking my dog Doug
-
-# 🚀 jennys-space 🚀
 
   - **Project type:** Side-scroller game
   - **Description:** Take my dog Doug on a walk, but be warned - he's reactive! You'll need to avoid oncoming enemies (dogs, cats, squirrels), collect treats, and try to enjoy your walk without exploding!
