@@ -24,7 +24,6 @@ pygame side-scroller about walking my dog Doug
 * treats to collect
 * other objects to avoid (trees/shrubs etc)
 * health &/ lives
-* 
 
 # 📚 Resources 📚
 * http://pygametutorials.wikidot.com/tutorials-basic
