@@ -17,7 +17,7 @@ pygame side-scroller about walking my dog Doug
     * I accidentally lost the MVP I made when trying to reorganise my folders (luckily only 1 evenings work & I can make it much quicker now) 
 
 # 🌱 MVP 🌱
-* orange block character controlled by the user to dodge other brown block enemies entering from the RHS of screen (travelling left)
+* Doug character controlled by the user to dodge other dog enemies entering from the RHS of screen (travelling left)
 * on contact with an enemy block, game quits
 
 #  📋 In Future 📋
