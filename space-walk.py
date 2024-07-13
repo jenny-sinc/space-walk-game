@@ -1,56 +1,45 @@
-import pygame
+import pygame, sys
 from pygame.locals import *
+import random
 
-class App:
-    
-    # initializes all PyGame modules. 
-    # then it creates the main display
-    def __init__(self):
-        self._running = True
-        self._display_surf = None
-        self.size = self.width, self.height = 1600, 800
-    
-    # calls pygame.init() & sets _running to true 
-    def on_init(self):    
-        pygame.init()
-        self._display_surf= pygame.display.set_mode(self.size, pygame.HWSURFACE | pygame.DOUBLEBUF)
-        self._running = True
+# initializes all PyGame modules. 
+pygame.init()
 
-    # check if use has quit (clicked close) 
-    # if so sets _running to False breaking the game loop
-    def on_event(self, event):
+# info to create the main display
+SCREEN_WIDTH, SCREEN_HEIGHT = 1000, 400
+CAPTION = "Space walk"
+ICON = pygame.image.load("./doug_icon.svg")
+FPS = pygame.time.Clock()
+FPS.tick(60)
+
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+pygame.display.set_caption(CAPTION)
+pygame.display.set_icon(ICON)
+
+class Dog(pygame.sprite.Sprite):
+    def __init__(self, x, y, scale):
+        pygame.sprite.Sprite.__init__(self)
+        img = pygame.image.load('./doug-sprite/doug_2.png')
+        self.image = pygame.transform.scale(img, (int(img.get_width()*scale), int(img.get_height()*scale)))
+        self.rect = self.image.get_rect()
+        self.rect.center = (x,y)
+    
+    def draw(self):
+        screen.blit(self.image, self.rect)
+
+# PLAYER (DOUG)
+doug = Dog(int(0.2*SCREEN_WIDTH), (SCREEN_HEIGHT/2), 2)
+
+run = True
+while run:
+
+    doug.draw()
+
+    for event in pygame.event.get():
+        # quit game
         if event.type == pygame.QUIT:
-            self._running = False
+            run = False
 
-    def on_loop(self):
-        pass
+    pygame.display.update()
 
-    def on_render(self):
-        pass
-
-    # calls pygame.quit() to quit all pygame modules
-    def on_cleanup(self):
-        pygame.quit()
-
-    # initialize pygame then enter the main game loop
-    def on_execute(self):
-        if self.on_init() == False:
-            self._running = False
-
-        # main game loop (while the game is running)
-        while( self._running ):
-
-            # check event calls
-            for event in pygame.event.get():
-                self.on_event(event)
-
-            # compute & render everything
-            self.on_loop()
-            self.on_render()
-            
-        # will clean up before quitting
-        self.on_cleanup()
-
-if __name__ == "__main__":
-    theApp = App()
-    theApp.on_execute()
+pygame.quit()
