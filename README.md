@@ -19,3 +19,9 @@ pygame side-scroller about walking my dog Doug
 
 #  📋 In Future:
 ❓ TBC
+
+# :book: Resources
+* http://pygametutorials.wikidot.com/tutorials-basic
+* https://coderslegacy.com/python/python-pygame-tutorial/
+* Coding with Russ YT video https://www.youtube.com/watch?v=DHgj5jhMJKg
+
