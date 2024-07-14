@@ -98,9 +98,17 @@ class Dog(pygame.sprite.Sprite):
 
         # check collision with boundaries of screen
         if self.rect.bottom + dy > SCREEN_HEIGHT:
-            dy = SCREEN_HEIGHT - self.rect.bottom
-            moving_down = False
-
+            self.rect.bottom = SCREEN_HEIGHT
+            dy = 0
+        if self.rect.top + dy <= 0:
+            self.rect.top = 0
+            dy = 0
+        if self.rect.right + dx > SCREEN_WIDTH:
+            self.rect.right = SCREEN_WIDTH
+            dx = 0
+        if self.rect.left + dy < 0:
+            self.rect.left = 0
+            dx = 0
 
 
     def update_animation(self):
