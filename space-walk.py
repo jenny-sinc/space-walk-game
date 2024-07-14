@@ -26,6 +26,19 @@ moving_right = False
 moving_up = False
 moving_down = False
 
+# load gameplay images
+#------------------------------- collectibles
+bone_img = pygame.image.load('./img/Collectibles/bone.png')
+cheese_img = pygame.image.load('./img/Collectibles/cheese.png')
+ball_img = pygame.image.load('./img/Collectibles/ball.png')
+collectible_types = {
+    'bone'  : bone_img,
+    'cheese': cheese_img,
+    'ball'  : ball_img
+}
+#------------------------------- obstacles
+#------------------------------- easter eggs
+
 # define colours
 GRASS = (65,152,10)
 BOUNDARY = (19,109,21)
@@ -40,6 +53,18 @@ def draw_bg():
     pygame.draw.line(screen, BOUNDARY, (SCREEN_WIDTH, 0), (SCREEN_WIDTH, SCREEN_HEIGHT), 5)
     pygame.draw.line(screen, BOUNDARY, (SCREEN_WIDTH, SCREEN_HEIGHT), (0, SCREEN_HEIGHT), 5)
     pygame.draw.line(screen, BOUNDARY, (0, SCREEN_HEIGHT), (0, 0), 5)
+
+class Collectible(pygame.sprite.Sprite):
+    def __init__(self, collectible_type, x, y):
+        pygame.sprite.Sprite.__init__(self)
+        self.collectible_type = collectible_type
+        self.image = collectible_types[self.collectible_type]
+        self.rect = self.image.get_rect()
+        self.rect.center = (x, y)
+    
+    def draw(self):
+        screen.blit(self.image, self.rect)
+
 
 class Dog(pygame.sprite.Sprite):
     def __init__(self, character_type, x, y, scale, speed):
@@ -98,9 +123,17 @@ class Dog(pygame.sprite.Sprite):
 
         # check collision with boundaries of screen
         if self.rect.bottom + dy > SCREEN_HEIGHT:
-            dy = SCREEN_HEIGHT - self.rect.bottom
-            moving_down = False
-
+            self.rect.bottom = SCREEN_HEIGHT
+            dy = 0
+        if self.rect.top + dy <= 0:
+            self.rect.top = 0
+            dy = 0
+        if self.rect.right + dx > SCREEN_WIDTH:
+            self.rect.right = SCREEN_WIDTH
+            dx = 0
+        if self.rect.left + dy < 0:
+            self.rect.left = 0
+            dx = 0
 
 
     def update_animation(self):
@@ -129,10 +162,16 @@ class Dog(pygame.sprite.Sprite):
         screen.blit(pygame.transform.flip(self.image, self.flip, False), self.rect)
 
     
+# # create sprite groups
+# enemy_group = pygame.sprite.Group()
+# collectibles_group = pygame.sprite.Group()
 
-# PLAYER (DOUG)
+
 doug = Dog('doug', int(0.2*SCREEN_WIDTH), (SCREEN_HEIGHT/2), 2, 3)
-dog1 = Dog('dog1', int(0.5*SCREEN_WIDTH), (SCREEN_HEIGHT/2), 2, 3)
+dog1 = Dog('dog1', int(SCREEN_WIDTH), (int(random.random()*SCREEN_HEIGHT)), 2, 3)
+bone = Collectible('bone', int(0.9*SCREEN_WIDTH), (int(random.random()*SCREEN_HEIGHT)))
+cheese = Collectible('cheese', int(0.9*SCREEN_WIDTH), (int(random.random()*SCREEN_HEIGHT)))
+ball = Collectible('ball', int(0.9*SCREEN_WIDTH), (int(random.random()*SCREEN_HEIGHT)))
 
 run = True
 while run:
@@ -144,6 +183,9 @@ while run:
     dog1.update_animation()
     doug.draw()
     dog1.draw()
+    bone.draw()
+    cheese.draw()
+    ball.draw()
 
     #update player actions (only so long as the player is alive)
     if doug.alive:
