@@ -201,6 +201,8 @@ while run:
         dog1.update_action(1)
         if doug.move:
             bone.move(2)
+            cheese.move(1.5)
+            ball.move(2.5)
         
         if (moving_left or moving_right or moving_up or moving_down):
             doug.update_action(1) # action 1: walk
