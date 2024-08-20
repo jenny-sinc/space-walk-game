@@ -1,6 +1,7 @@
 import pygame, sys
 from pygame.locals import *
 import os, random
+import math
 
 # initializes all PyGame modules. 
 pygame.init()
@@ -65,6 +66,13 @@ class Collectible(pygame.sprite.Sprite):
     def draw(self):
         screen.blit(self.image, self.rect)
 
+    def move(self, speed):
+        # reset movement variables
+        dx = 0
+        dx = -speed
+        self.direction = -1
+        self.rect.x += dx
+
 
 class Dog(pygame.sprite.Sprite):
     def __init__(self, character_type, x, y, scale, speed):
@@ -121,20 +129,20 @@ class Dog(pygame.sprite.Sprite):
         self.rect.x += dx
         self.rect.y += dy
 
-        # check collision with boundaries of screen
-        if self.rect.bottom + dy > SCREEN_HEIGHT:
-            self.rect.bottom = SCREEN_HEIGHT
-            dy = 0
-        if self.rect.top + dy <= 0:
-            self.rect.top = 0
-            dy = 0
-        if self.rect.right + dx > SCREEN_WIDTH:
-            self.rect.right = SCREEN_WIDTH
-            dx = 0
-        if self.rect.left + dy < 0:
-            self.rect.left = 0
-            dx = 0
-
+        if (self.character_type == doug):
+            # check collision with boundaries of screen
+            if self.rect.bottom + dy > SCREEN_HEIGHT:
+                self.rect.bottom = SCREEN_HEIGHT
+                dy = 0
+            if self.rect.top + dy <= 0:
+                self.rect.top = 0
+                dy = 0
+            if self.rect.right + dx > SCREEN_WIDTH:
+                self.rect.right = SCREEN_WIDTH
+                dx = 0
+            if self.rect.left + dy < 0:
+                self.rect.left = 0
+                dx = 0
 
     def update_animation(self):
         # update animation using a timer
@@ -189,6 +197,11 @@ while run:
 
     #update player actions (only so long as the player is alive)
     if doug.alive:
+        dog1.move(True, False, False, False) 
+        dog1.update_action(1)
+        if doug.move:
+            bone.move(2)
+        
         if (moving_left or moving_right or moving_up or moving_down):
             doug.update_action(1) # action 1: walk
         else:
